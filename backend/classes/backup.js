@@ -129,7 +129,10 @@ async function backup(refLog) {
         };
       });
 
-    fileData = fileData.sort((a, b) => new Date(b.datecreated) - new Date(a.datecreated)).slice(5);
+    fileData = fileData.sort((a, b) => new Date(b.datecreated) - new Date(a.datecreated));
+    if (fileData.length > 5) { // Only slice if there are more than 5 files
+      fileData = fileData.slice(0, fileData.length - 5);
+    }
 
     for (var oldBackup of fileData) {
       const oldBackupFile = path.join(__dirname, "..", backupfolder, oldBackup.name);
